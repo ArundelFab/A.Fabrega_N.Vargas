@@ -13,23 +13,23 @@
   <div class="fondoForm">
     <div class="formularioLogin">
       <div class="form" id="form">
-        <h1>¡Qué gusto que regreses!</h1>
+        <h1>¡Qué gusto tenerte de vuelta!</h1>
 
         <div class="campo email">
           <div class="icon"></div>
           <label for="email">Ingrese su Email:</label>
-          <input class="input" id="email" type="mail" placeholder="Ingrese su Email" autocomplete="on" />
+          <input class="input" id="email" type="mail" autocomplete="on" />
         </div>
 
         <div class="campo password">
           <div class="icon"></div>
           <label for="password">Ingrese su Contraseña:</label>
-          <input class="input" id="password" type="password" placeholder="Ingrese su Contraseña" />
+          <input class="input" id="password" type="password" />
         </div>
 
         <button class="buttonSubmit" id="submit">INICIAR SESIÓN</button>
 
-        <h2>Para crear tu cuenta, has click <a href="?op=registrarse">Aquí</a></h2>
+        <h2><a href="?op=registrarse">Quisiera Crear una cuenta</a></h2>
 
       </div>
     </div>

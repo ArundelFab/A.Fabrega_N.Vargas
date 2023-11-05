@@ -41,7 +41,7 @@
           <input class="input" id="password" type="password" placeholder="* * * * * * * * * *" />
         </div>
         <button class="buttonSubmit" id="submit">REGISTRARME</button>
-        <h2>Si ya tienes una cuenta cuenta, has click <a href="?op=login">Aquí</a></h2>
+        <h2><a href="?op=login">Ya tengo una cuenta</a></h2>
       </div>
     </div>
 
