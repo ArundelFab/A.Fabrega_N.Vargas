@@ -13,15 +13,21 @@ if (isset($_GET['op'])) {
 
 
     if ($opcion == "registrarse") {
-        //Llamo al método ver pasándole la clave que me están pidiendo
+        //llama funcion dentro de controller.php para llevar a registrarseView para usuarios nuevos
         $controller->CrearUsuario();
     } 
+
+    if ($opcion == "registrarNuevoUser") {
+        //llama funcion dentro de controller.php para registrar un nuevo usuario
+        $controller->GuardarNuevoUsuarioEnBaseDeDatos();
+    } 
     else if ($opcion == "login") {
-        //Llamo al método ver pasándole la clave que me están pidiendo
+        //llama funcion dentro de controller.php para llevar a loginView para usuarios existentes
         $controller->Index();
     } 
 
     else if ($opcion == "ingresar") {
+        //llama funcion dentro de controller.php para llevar a homeView para usuarios validados
         $controller->Ingresar();
     }
     
