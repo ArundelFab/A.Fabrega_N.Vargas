@@ -46,39 +46,54 @@ class UsuarioModel
         }
     }
 
-    public function obtenerUsuarioPorUsername($username)
+    public function logearUsuario($usuarioLogin)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE username = ?");
-            $stmt->execute([$username]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+            $stmt->execute([$usuarioLogin->email]);
+
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($resultado) { // se verifica primero que la consulta no este vacía
+                $resPass = $resultado['password']; //contraseña obtenida de la consulta
+                if (password_verify($usuarioLogin->password, $resPass)) {
+                    return $resultado;
+                }
+            }
+            // deberia poner algo como un modal para que indique si es valido el inicio de sesión
         } catch (PDOException $e) {
-            // Manejar el error, por ejemplo, registrar en un archivo de registro
-            return null; // Error al obtener el usuario
+            die($e->getMessage());
         }
     }
 
-    public function actualizarUsuario($userId, $username, $password, $email)
+
+    public function obtenerUsuarios()
     {
         try {
-            $stmt = $this->conn->prepare("UPDATE usuarios SET username = ?, password = ?, email = ? WHERE user_id = ?");
-            $stmt->execute([$username, $password, $email, $userId]);
-            return true; // Éxito al actualizar el usuario
+            $stmt = $this->pdo->prepare("SELECT usuario_id,nombre, apellido, email, rol,fecha_registro   FROM usuarios");
+            $stmt->execute();
+
+            $resultado = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+            // deberia poner algo como un modal para que indique si es valido el inicio de sesión
         } catch (PDOException $e) {
-            // Manejar el error, por ejemplo, registrar en un archivo de registro
-            return false; // Error al actualizar el usuario
+            die($e->getMessage());
         }
     }
 
-    public function eliminarUsuario($userId)
+    public function obtenerCantEntradasPorUsuario()
     {
         try {
-            $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE user_id = ?");
-            $stmt->execute([$userId]);
-            return true; // Éxito al eliminar el usuario
+            $stmt = $this->pdo->prepare("SELECT u.usuario_id, u.nombre, u.apellido, u.email, u.rol, u.fecha_registro, COUNT(e.entrada_id) as cant_entradas
+            FROM usuarios u
+            LEFT JOIN entradas e ON u.usuario_id = e.usuario_id
+            GROUP BY u.usuario_id, u.nombre, u.apellido, u.email, u.rol, u.fecha_registro");
+            $stmt->execute();
+
+            $resultado = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+            // deberia poner algo como un modal para que indique si es valido el inicio de sesión
         } catch (PDOException $e) {
-            // Manejar el error, por ejemplo, registrar en un archivo de registro
-            return false; // Error al eliminar el usuario
+            die($e->getMessage());
         }
     }
 }
